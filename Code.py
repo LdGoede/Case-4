@@ -1,4 +1,3 @@
-pip install geopandas
 
 import pandas as pd
 import requests
