@@ -129,25 +129,7 @@ def plot_map(year):
     # Stel de titel van de plot in met het geselecteerde jaar
     ax.set_title(f'Gemiddelde Verkoopprijs in {year}')  
 
-#kaart 2: 
-# Laden van de data in een GeoDataFrame
-gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
 
-# Bepaal de minimale en maximale waarden voor de kleurschaal
-min_val = gdfProv['GemiddeldeVerkoopprijs_1'].min()
-max_val = gdfProv['GemiddeldeVerkoopprijs_1'].max()
-
-# Functie om de kaart te plotten op basis van het jaar
-def plot_map2(year):
-    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
-
-    # Creëer de plot met 'plasma' colormap
-    fig, ax = plt.subplots(figsize=(10, 10))
-    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
-    plt.title(f"Kaart van Nederland in {year}")
-
-# Interactieve slider voor het jaar
-interact(plot_map2, year=gdfProv['Perioden'].unique())
 
 
 #lijnchart 
@@ -183,4 +165,4 @@ fig1.add_vline(x=index_128_8, line_dash="dot", line_color="green", annotation_te
 fig1.update_xaxes(title_text="Perioden")
 fig1.update_yaxes(title_text="Prijsindex van Bestaande Koopwoningen")
 
-st.map(plot_map2)
+st.plotly_chart(fig1, use_container_width=True)
