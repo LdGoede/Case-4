@@ -1,4 +1,4 @@
-from ipywidgets import interact
+
 import pandas as pd
 import requests
 import geopandas as gpd
