@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-
+import matplotlib.pyplot as plt
 import streamlit as st
 import json
 import seaborn as sns
