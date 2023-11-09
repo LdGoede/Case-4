@@ -5,7 +5,7 @@ import streamlit as st
 import json
 import seaborn as sns
 import plotly.express as px
-import plotly.graph_objects as g
+import plotly.graph_objects as go
 import geopandas as gpd
 
 #API call 1 GeodataGemeente
