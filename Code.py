@@ -1,17 +1,17 @@
 
 import pandas as pd
 import requests
-import geopandas as gpd
 import matplotlib.pyplot as plt
 import streamlit as st
 import json
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as g
+import geopandas as gpd
 
 #API call 1 GeodataGemeente
 @st.cache(ttl=1200)
-def api_call_gem():
+def load_geo_data():
     url = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/townships.geojson"
 
     # Het bestand downloaden
@@ -20,13 +20,13 @@ def api_call_gem():
     # Controleren of de download succesvol was
     if response.status_code == 200:
         data = response.json()
-        return data
+        return gpd.GeoDataFrame.from_features(data)
     else:
         st.write("Kon het bestand niet downloaden.")
-geodata = api_call_gem()
+        return None
 
-# Open het GeoJSON-bestand met geopandas
-geo_data = gpd.read_file(geodata)
+# Functie aanroepen om de gegevens te laden
+geo_data = load_geo_data()
 # Selecteer specifieke kolommen, bijvoorbeeld 'column1', 'column2' en 'column3'
 selected_columns_geo = geo_data[['code', 'name', 'geometry']]
 # Toevoegen van 'GM' aan de 'code'-kolom in de DataFrame
@@ -34,7 +34,7 @@ selected_columns_geo.loc[:, 'code'] = 'GM' + selected_columns_geo['code'].astype
 
 
 #API call 2 GeoDataProvincie
-@st.cache_data(ttl=1200)
+@st.cache(ttl=1200)
 def api_call_prov():
     url2 = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/provinces.geojson"
     
@@ -47,9 +47,14 @@ def api_call_prov():
         return data
     else:
         st.write("Kon het bestand niet downloaden.")
-geo_dataProv = api_call_prov()
-# Open het GeoJSON-bestand met geopandas
-geo_data_prov = gpd.read_file(geo_dataProv)
+        return None
+
+@st.cache(ttl=1200)
+def get_geo_data():
+    geo_dataProv = api_call_prov()
+    return gpd.GeoDataFrame.from_features(geo_dataProv['features'])
+
+geo_data_prov = get_geo_data()
 geo_data_prov['name'] = geo_data_prov['name'].replace('Friesland (Fryslân)', 'Friesland')
 # Selecteer specifieke kolommen, bijvoorbeeld 'column1', 'column2' en 'column3'
 selected_columns_geo_prov = geo_data_prov[['name', 'geometry']]
