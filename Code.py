@@ -18,7 +18,6 @@ def api_call_gem():
     if response.status_code == 200:
     # Het bestand opslaan
         with open(Geodata, 'wb') as f:
-        f.write(response.content)
         print(f"Download van {Geodata} voltooid.")
     else:
         print("Kon het bestand niet downloaden.")
@@ -43,7 +42,6 @@ def api_call_prov():
     if response2.status_code == 200:
         # Het bestand opslaan
         with open(GeodataProv, 'wb') as f:
-        f.write(response2.content)
         print(f"Download van {GeodataProv} voltooid.")
     else:
         print("Kon het bestand niet downloaden.")
