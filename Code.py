@@ -4,27 +4,30 @@ import requests
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import streamlit as st
+import json
 
 #API call 1 GeodataGemeente
-@st.cache_data(ttl=1200)
+@st.cache(ttl=1200)
 def api_call_gem():
     url = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/townships.geojson"
-    Geodata = "townships.geojson"
 
     # Het bestand downloaden
     response = requests.get(url)
 
     # Controleren of de download succesvol was
     if response.status_code == 200:
-    data = response.json()
-        
+        data = response.json()
         return data
-        
     else:
-        print("Kon het bestand niet downloaden.")
+        st.write("Kon het bestand niet downloaden.")
+
+# Streamlit app
+st.title('Voorbeeld van een API-aanroep')
+
+geodata = api_call_gem()
 
 # Open het GeoJSON-bestand met geopandas
-geo_data = gpd.read_file(api_call_gem())
+geo_data = gpd.read_file(geodata)
 # Selecteer specifieke kolommen, bijvoorbeeld 'column1', 'column2' en 'column3'
 selected_columns_geo = geo_data[['code', 'name', 'geometry']]
 # Toevoegen van 'GM' aan de 'code'-kolom in de DataFrame
