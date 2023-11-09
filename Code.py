@@ -16,8 +16,9 @@ def api_call_gem():
 
     # Controleren of de download succesvol was
     if response.status_code == 200:
-    # Het bestand opslaan
-        with open(Geodata, 'wb') as f:
+    data = response.json()
+        geo_data = gpd.GeoDataFrame.from_features(data["features"])
+        return geo_data
         
     else:
         print("Kon het bestand niet downloaden.")
@@ -40,8 +41,9 @@ def api_call_prov():
 
     # Controleren of de download succesvol was
     if response2.status_code == 200:
-        # Het bestand opslaan
-        with open(GeodataProv, 'wb') as f:
+        data = response2.json()
+        geo_data = gpd.GeoDataFrame.from_features(data["features"])
+        return geo_data
        
     else:
         print("Kon het bestand niet downloaden.")
