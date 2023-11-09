@@ -5,6 +5,9 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import streamlit as st
 import json
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as g
 
 #API call 1 GeodataGemeente
 @st.cache(ttl=1200)
@@ -20,10 +23,6 @@ def api_call_gem():
         return data
     else:
         st.write("Kon het bestand niet downloaden.")
-
-# Streamlit app
-st.title('Voorbeeld van een API-aanroep')
-
 geodata = api_call_gem()
 
 # Open het GeoJSON-bestand met geopandas
@@ -38,20 +37,19 @@ selected_columns_geo.loc[:, 'code'] = 'GM' + selected_columns_geo['code'].astype
 @st.cache_data(ttl=1200)
 def api_call_prov():
     url2 = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/provinces.geojson"
-    GeodataProv = "provinces.geojson"
+    
     # Het bestand downloaden
-    response2 = requests.get(url2)
+    response = requests.get(url2)
 
     # Controleren of de download succesvol was
-    if response2.status_code == 200:
-        data = response2.json()
-        
+    if response.status_code == 200:
+        data = response.json()
         return data
-       
     else:
-        print("Kon het bestand niet downloaden.")
+        st.write("Kon het bestand niet downloaden.")
+geo_dataProv = api_call_prov()
 # Open het GeoJSON-bestand met geopandas
-geo_data_prov = gpd.read_file(api_call_prov())
+geo_data_prov = gpd.read_file(geo_dataProv)
 geo_data_prov['name'] = geo_data_prov['name'].replace('Friesland (Fryslân)', 'Friesland')
 # Selecteer specifieke kolommen, bijvoorbeeld 'column1', 'column2' en 'column3'
 selected_columns_geo_prov = geo_data_prov[['name', 'geometry']]
@@ -62,9 +60,10 @@ selected_columns_geo_prov = geo_data_prov[['name', 'geometry']]
 gemiddelde_verkoop = pd.read_csv('GemVerkoop.csv',sep = ';')
 #Gemiddelde verkoop
 gemiddelde_verkoop_prov = pd.read_csv('GemVerkoopProv.csv',sep = ';')
+#Index
+index = pd.read_csv('bestaande_koopwoningen.csv', sep=';', quotechar='"')
 
-
-#Filtering CSV
+#Filtering CSV Prov
 # Dictionary met de corresponderende provinciecodes en namen
 provinciecodes = {
     'PV20  ': 'Groningen',
@@ -80,11 +79,15 @@ provinciecodes = {
     'PV30  ': 'Noord-Brabant',
     'PV31  ': 'Limburg'
 }
-
 # Vervang de codes door de provincienamen in de kolom 'RegioS'
 gemiddelde_verkoop_prov['RegioS'] = gemiddelde_verkoop_prov['RegioS'].replace(provinciecodes)
 # Verwijder de laatste vier tekens van de 'Perioden' kolom
 gemiddelde_verkoop_prov['Perioden'] = gemiddelde_verkoop_prov['Perioden'].str.slice(stop=-4)
+
+#filtering and cleaning index csv
+kolommen_te_verwijderen = ["ID", "OntwikkelingTOVEenJaarEerder_3", "OntwikkelingTOVVoorgaandePeriode_2", "OntwikkelingTOVVoorgaandePeriode_5", "OntwikkelingTOVEenJaarEerder_6", "TotaleWaardeVerkoopprijzen_8"]
+index = index.drop(columns=kolommen_te_verwijderen)
+index = index.dropna()
 
 
 #merging data
@@ -120,14 +123,7 @@ def plot_map(year):
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, cmap='viridis', legend=True)
 
     # Stel de titel van de plot in met het geselecteerde jaar
-    ax.set_title(f'Gemiddelde Verkoopprijs in {year}')
-
-    # Toon de plot
-    plt.show()
-
-# Gebruik de plot_map functie om de kaart voor een specifiek jaar te genereren
-plot_map('2015')
-
+    ax.set_title(f'Gemiddelde Verkoopprijs in {year}')  
 
 #kaart 2: 
 # Laden van de data in een GeoDataFrame
@@ -149,5 +145,38 @@ def plot_map2(year):
 # Interactieve slider voor het jaar
 interact(plot_map2, year=gdfProv['Perioden'].unique())
 
+
+#lijnchart 
+# Maak een interactieve lijnplot met Plotly Express
+fig1 = px.line(index, x="Perioden", y="PrijsindexBestaandeKoopwoningen_1",
+              labels={"PrijsindexBestaandeKoopwoningen_1": "Prijsindex Bestaande Koopwoningen_1"},
+              hover_data=["PrijsindexBestaandeKoopwoningen_1"])
+
+# Voeg een horizontale lijn toe bij de waarde 100
+fig1.add_hline(y=100, line_dash="dash", line_color="red", annotation_text="Waarde 100", annotation_position="top left")
+
+# Voeg een rechthoekig gebied toe van '2007MM10' tot '2011JJ00'
+fig1.add_vrect(x0='2007MM10', x1='2011JJ00', fillcolor="rgba(0, 0, 255, 0.2)", line_width=0)
+
+# Voeg de tekst 'Kredietcrisis' toe aan het gemarkeerde gebied
+fig1.add_trace(
+    go.Scatter(
+        x=['2009MM10'],
+        y=[190],
+        text=['Kredietcrisis'],
+        mode='text',
+        showlegend=False
+    )
+)
+
+# Zoek de index van de waarde 128.8 in de dataset
+index_128_8 = index[index['PrijsindexBestaandeKoopwoningen_1'] == 128.8].index[0]
+
+# Voeg een verticale lijn toe op de x-as bij de index waar de waarde 128.8 wordt bereikt
+fig1.add_vline(x=index_128_8, line_dash="dot", line_color="green", annotation_text="Stikstofcrisis", annotation_position="bottom right")
+
+# Pas de labels aan
+fig1.update_xaxes(title_text="Perioden")
+fig1.update_yaxes(title_text="Prijsindex van Bestaande Koopwoningen")
 
 st.map(plot_map2)
