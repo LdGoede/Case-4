@@ -166,9 +166,10 @@ fig1.update_xaxes(title_text="Perioden")
 fig1.update_yaxes(title_text="Prijsindex van Bestaande Koopwoningen")
 
 # Streamlit section
-st.title("Invloeden op de woningcrisis o.b.v. data")
+st.title("De woningcrisis o.b.v. data")
 st.caption("Door Emma Wartena & Luuk de Goede")
 st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-of-us-paper-currency-royalty-free-image-1631301093.jpg?crop=1.00xw:0.376xh;0,0.126xh&resize=1200:*', caption='Credit: Elle.com')
 
 
 st.plotly_chart(fig1, use_container_width=True)
+st.map(plot_map(year))
