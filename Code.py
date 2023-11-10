@@ -9,7 +9,6 @@ import plotly.graph_objects as go
 import geopandas as gpd
 
 #API call 1 GeodataGemeente
-@st.cache(ttl=1200)
 def load_geo_data():
     url = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/townships.geojson"
 
@@ -33,7 +32,6 @@ selected_columns_geo.loc[:, 'code'] = 'GM' + selected_columns_geo['code'].astype
 
 
 #API call 2 GeoDataProvincie
-@st.cache(ttl=1200)
 def api_call_prov():
     url2 = "https://www.webuildinternet.com/articles/2015-07-19-geojson-data-of-the-netherlands/provinces.geojson"
     
@@ -48,7 +46,6 @@ def api_call_prov():
         st.write("Kon het bestand niet downloaden.")
         return None
 
-@st.cache(ttl=1200)
 def get_geo_data():
     geo_dataProv = api_call_prov()
     return gpd.GeoDataFrame.from_features(geo_dataProv['features'])
@@ -118,7 +115,7 @@ gdf = gpd.GeoDataFrame(data_2015, geometry='geometry')
 
 # Functie voor het plotten van de kaart
 def plot_map(year):
-    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+    fig, ax = plt.subplots(1, 1, figsize=(2, 8))
 
     data_to_plot = gdf
 
