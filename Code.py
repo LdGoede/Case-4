@@ -236,7 +236,9 @@ fig.add_trace(go.Scatter(x=future_years_cpi['Year'], y=predictions_cpi,
                          mode='lines',
                          line=dict(color='orange', width=2),
                          name='Predicted CPI'))
-
+r_squared_price_index = model_price_index.score(X_price_index, y_price_index)
+# Assess R-squared for CPI
+r_squared_cpi = model_cpi.score(X_cpi, y_cpi)
 
 
 
@@ -250,6 +252,8 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 st.write('''Een koopwoning krijgen is haast onmogelijk, je hoort het vaak genoeg in het nieuws of om je heen. Erg vervelend maar wat zijn nou oorzaken hiervan? En kunnen deze oorzaken uitgelicht worden door de data? En wat zegt de data over de toekomst? In deze post wordt ingezoomd op al deze punten. De data die gebruikt is, is afkomstig van het CBS en is van de periode 1995 tot 2022. ''')
 st.subheader("Prijsindex koopwoningen Nederland (1995-2022)")
 st.plotly_chart(fig1, use_container_width=True)
+st.write('''In deze grafiek wordt de consumentprijsindex tegenover de prijsindex van de verkoopprijzen van huizen geplaatst. In de prijsindex, ofwel PBK,  wordt de prijsverandering gemeten van de voorraad bestaande koopwoningen in Nederland. De consumentenprijsindex, ofwel CPI, is een afgeleide van de inflatie. Dit wordt weergeven in een percentage index.
+Wanneer de CPI-waarde lager is dan de prijsindex betekent het dat er een grotere vraag is naar huizen dan de markt eigenlijk aan zou kunnen. Wanneer deze waardes dus gelijk zijn is er een stabiel vraag en aanbod op de markt. ''')
 st.caption('Bron: CBS')
 st.divider()
 st.subheader("Invloed van locatie op gemiddelde prijs")
@@ -284,8 +288,9 @@ st.caption('Bron: GJSON provinces of the Netherlands / webuildinternet.com')
 st.divider()
 st.subheader('Toekomst perspectief ten opzichte van inflatie')
 st.plotly_chart(fig, use_container_width = True)
-st.write('''In deze grafiek wordt de consumentprijsindex tegenover de prijsindex van de verkoopprijzen van huizen geplaatst. In de prijsindex, ofwel PBK,  wordt de prijsverandering gemeten van de voorraad bestaande koopwoningen in Nederland. De consumentenprijsindex, ofwel CPI, is een afgeleide van de inflatie. Dit wordt weergeven in een percentage index.
-Wanneer de CPI-waarde lager is dan de prijsindex betekent het dat er een grotere vraag is naar huizen dan de markt eigenlijk aan zou kunnen. Wanneer deze waardes dus gelijk zijn is er een stabiel vraag en aanbod op de markt. ''')
+st.write(f'R-squared for Price Index Existing Homes: {r_squared_price_index}')
+st.write(f'R-squared for CPI: {r_squared_cpi}')
+st.write('''''')
 st.caption('Bron: CBS')
 st.divider()
 st.subheader('Conclusie')
