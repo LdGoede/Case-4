@@ -179,7 +179,10 @@ def load_data():
 # Streamlit app code
 gdfProv = load_data()
 
-selected_year = st.slider('Selecteer een jaar', min_value=gdfProv['Perioden'].min(), max_value=gdfProv['Perioden'].max())
+min_year = int(gdfProv['Perioden'].min())
+max_year = int(gdfProv['Perioden'].max())
+
+selected_year = st.slider('Selecteer een jaar', min_value=min_year, max_value=max_year)
 
 @st.cache
 def plot_map(year):
