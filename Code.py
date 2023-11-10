@@ -179,17 +179,21 @@ def load_data():
 # Streamlit app code
 gdfProv = load_data()
 
-# Widgets voor interactie
 selected_year = st.slider('Selecteer een jaar', min_value=gdfProv['Perioden'].min(), max_value=gdfProv['Perioden'].max())
 
-if st.button('Genereer kaart'):
-    data_to_plot = gdfProv[gdfProv['Perioden'] == selected_year]
+@st.cache
+def plot_map(year):
+    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
 
     # Creëer de plot met 'plasma' colormap
     fig, ax = plt.subplots(figsize=(10, 10))
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"})
-    plt.title(f"Kaart van Nederland in {selected_year}")
+    plt.title(f"Kaart van Nederland in {year}")
 
-    st.pyplot()
+    return fig
+
+if st.button('Genereer kaart'):
+    fig = plot_map(selected_year)
+    st.pyplot(fig)
 
 
