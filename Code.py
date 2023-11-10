@@ -170,7 +170,34 @@ fig1.update_xaxes(title_text="Perioden")
 fig1.update_yaxes(title_text="Prijsindex van Bestaande Koopwoningen")
 
 
+
+
 #lijnchart2
+# Create an interactive line plot with Plotly Express for the existing dataset
+fig = px.line(index, x="Year", y="PrijsindexBestaandeKoopwoningen_1",
+              labels={"PrijsindexBestaandeKoopwoningen_1": "Price Index Existing Homes_1"},
+              hover_data=["PrijsindexBestaandeKoopwoningen_1"],
+              line_shape='linear', render_mode='svg',
+              title="Price Index Existing Homes")
+
+# Add the CPI line in red with legend
+fig.add_trace(go.Scatter(x=inflation['Year'], y=inflation['CPI_1'],
+                         mode='lines',
+                         line=dict(color='red', width=2),
+                         name='CPI'))
+
+# Add a horizontal line at the value 100
+fig.add_hline(y=100, line_dash="dash", line_color="red", annotation_text="Value 100", annotation_position="top left")
+
+# Update labels
+fig.update_xaxes(title_text="Year")
+fig.update_yaxes(title_text="Index")
+
+# Add a legend
+fig.update_layout(legend=dict(x=0, y=1, traceorder='normal', orientation='h'))
+
+
+
 
 
 # Streamlit section
@@ -207,5 +234,6 @@ selected_year = st.selectbox('Selecteer een jaar', years_list)
 # Genereer de kaart op basis van het geselecteerde jaar
 plot_map(selected_year)
 
+st.plotly_chart(fig, use_container_width = True)
 
 
