@@ -115,7 +115,7 @@ gdf = gpd.GeoDataFrame(data_2015, geometry='geometry')
 
 # Functie voor het plotten van de kaart
 def plot_map(year):
-    fig, ax = plt.subplots(1, 1, figsize=(4, 3))
+    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
 
     data_to_plot = gdf
 
@@ -168,4 +168,4 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 
 
 st.plotly_chart(fig1, use_container_width=True)
-st.pyplot(map_fig, use_container_width=False)
+st.pyplot(map_fig, use_container_width=True)
