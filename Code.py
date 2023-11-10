@@ -171,6 +171,9 @@ st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
 
 gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
+# Bepaal de minimale en maximale waarden voor de kleurschaal
+min_val = gdfProv['GemiddeldeVerkoopprijs_1'].min()
+max_val = gdfProv['GemiddeldeVerkoopprijs_1'].max()
 # Functie om de kaart te plotten op basis van het jaar
 def plot_map(year):
     data_to_plot = gdfProv[gdfProv['Perioden'] == year]
