@@ -179,7 +179,7 @@ def plot_map(year):
     data_to_plot = gdfProv[gdfProv['Perioden'] == year]
 
     # Creëer de plot met 'plasma' colormap
-    fig, ax = plt.subplots(figsize=(10, 7))
+    fig, ax = plt.subplots(figsize=(15, 7))
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
     plt.title(f"Kaart van Nederland in {year}")
     st.pyplot(fig)
