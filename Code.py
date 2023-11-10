@@ -170,33 +170,21 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
 
-# Laden van de data in een GeoDataFrame
-@st.cache
-def load_data():
-    gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
-    return gdfProv
 
-# Streamlit app code
-gdfProv = load_data()
+# Laden van de data in een GeoDataFrame
+gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
 
 min_year = int(gdfProv['Perioden'].min())
 max_year = int(gdfProv['Perioden'].max())
 
-selected_year = st.slider('Selecteer een jaar', min_value=min_year, max_value=max_year)
+selected_year = st.selectbox('Selecteer een jaar', options=range(min_year, max_year + 1))
 
-@st.cache
-def plot_map(year):
-    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
+data_to_plot = gdfProv[gdfProv['Perioden'] == selected_year]
 
-    # Creëer de plot met 'plasma' colormap
-    fig, ax = plt.subplots(figsize=(10, 10))
-    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"})
-    plt.title(f"Kaart van Nederland in {year}")
+fig, ax = plt.subplots(figsize=(10, 10))
+data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"})
+plt.title(f"Kaart van Nederland in {selected_year}")
 
-    return fig
-
-if st.button('Genereer kaart'):
-    fig = plot_map(selected_year)
-    st.pyplot(fig)
+st.pyplot(fig)
 
 
