@@ -248,11 +248,12 @@ st.title("De woningcrisis o.b.v. data")
 st.caption("Door Emma Wartena & Luuk de Goede")
 st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-of-us-paper-currency-royalty-free-image-1631301093.jpg?crop=1.00xw:0.376xh;0,0.126xh&resize=1200:*', caption='Credit: Elle.com')
 st.write('''Een koopwoning krijgen is haast onmogelijk, je hoort het vaak genoeg in het nieuws of om je heen. Erg vervelend maar wat zijn nou oorzaken hiervan? En kunnen deze oorzaken uitgelicht worden door de data? En wat zegt de data over de toekomst? In deze post wordt ingezoomd op al deze punten. De data die gebruikt is, is afkomstig van het CBS en is van de periode 1995 tot 2022. ''')
-
+st.subheader("Prijsindex koopwoningen Nederland (1995-2022)")
 st.plotly_chart(fig1, use_container_width=True)
+st.subheader("Invloed van locatie op gemiddelde prijs (2015)")
 st.pyplot(map_fig, use_container_width=True)
-
-
+st.write('''De kaart hierboven geeft weer wat de gemiddelde verkoopprijs van een koophuis was in 2015 per gemeente. Hieruit valt op te maken dat de gemiddelde prijzen in steden en gebieden rond steden hoger zijn. Vooral in de randstad is dit prominent aanwezig. Ook is te zien dat in de uithoeken van het land de huisprijzen gemiddeld lager zijn. Op de eilanden zijn de prijzen echter wel weer wat hoger. ''')
+st.caption('Bron: GJSON township of the Netherlands 2015 / webuildinternet.com')
 #kaart 2
 gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
 # Bepaal de minimale en maximale waarden voor de kleurschaal
