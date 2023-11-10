@@ -279,7 +279,8 @@ selected_year = st.selectbox('Selecteer een jaar', years_list)
 
 # Genereer de kaart op basis van het geselecteerde jaar
 plot_map(selected_year)
-
+st.write('''Op de kaart is te zien hoe de gemiddelde prijs van een verkoopwoning per provincie is veranderd over de jaren (1995-2022). In de vroege jaren 1995-2000 is te zien dat de prijzen tussen de provincies niet zeer grote verschillen hebben. Met de jaren is echter te zien dat de verschillen tussen de provincies groter worden. Dit is goed te zien bij provincies als Noord-Holland. Het gemiddelde ligt veel hoger dan bij bijvoorbeeld Groningen. Nu is bestaat Noord-Holland natuurlijk niet alleen uit Amsterdam. Vergeleken de gemeentekaart is goed te zien dat er zeker in het noorden van Noord-Holland gebieden zijn met lagere prijzen. Dit duidt aan dat de prijzen in steden harder zijn gestegen dan in de rest van de provincie. Zo kan geconcludeerd worden dat de prijzen in steden (zeker in de randstad) harder zijn gestegen. ''')
+st.caption('Bron: GJSON provinces of the Netherlands / webuildinternet.com')
 st.plotly_chart(fig, use_container_width = True)
 
 
