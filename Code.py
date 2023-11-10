@@ -170,7 +170,24 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
 
+# Functie om de kaart te plotten op basis van het jaar
+def plot_map(year):
+    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
 
+    # Creëer de plot met 'plasma' colormap
+    fig, ax = plt.subplots(figsize=(10, 10))
+    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
+    plt.title(f"Kaart van Nederland in {year}")
+    st.pyplot(fig)
+
+# Lijst van jaren om in het dropdownmenu weer te geven
+years_list = gdfProv['Perioden'].unique()
+
+# Dropdownmenu voor het jaar
+selected_year = st.selectbox('Selecteer een jaar', years_list)
+
+# Genereer de kaart op basis van het geselecteerde jaar
+plot_map(selected_year)
 
 
 
