@@ -168,4 +168,4 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 
 
 st.plotly_chart(fig1, use_container_width=True)
-st.pyplot(map_fig, use_container_width=True)
+st.pyplot(map_fig, use_container_width=False)
