@@ -246,14 +246,14 @@ r_squared_cpi = model_cpi.score(X_cpi, y_cpi)
 
 
 # Streamlit section
-st.title("De woningcrisis o.b.v. data")
+st.title("De woningcrisis uitgedrukt in data")
 st.caption("Door Emma Wartena & Luuk de Goede")
 st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-of-us-paper-currency-royalty-free-image-1631301093.jpg?crop=1.00xw:0.376xh;0,0.126xh&resize=1200:*', caption='Credit: Elle.com')
 st.write('''Een koopwoning krijgen is haast onmogelijk, je hoort het vaak genoeg in het nieuws of om je heen. Erg vervelend maar wat zijn nou oorzaken hiervan? En kunnen deze oorzaken uitgelicht worden door de data? En wat zegt de data over de toekomst? In deze post wordt ingezoomd op al deze punten. De data die gebruikt is, is afkomstig van het CBS en is van de periode 1995 tot 2022. ''')
 st.subheader("Prijsindex koopwoningen Nederland (1995-2022)")
 st.plotly_chart(fig1, use_container_width=True)
-st.write('''In deze grafiek wordt de consumentprijsindex tegenover de prijsindex van de verkoopprijzen van huizen geplaatst. In de prijsindex, ofwel PBK,  wordt de prijsverandering gemeten van de voorraad bestaande koopwoningen in Nederland. De consumentenprijsindex, ofwel CPI, is een afgeleide van de inflatie. Dit wordt weergeven in een percentage index.
-Wanneer de CPI-waarde lager is dan de prijsindex betekent het dat er een grotere vraag is naar huizen dan de markt eigenlijk aan zou kunnen. Wanneer deze waardes dus gelijk zijn is er een stabiel vraag en aanbod op de markt. ''')
+st.write('''In deze grafiek wordt de consumentprijsindex tegenover de prijsindex van de verkoopprijzen van huizen geplaatst. In de prijsindex, ofwel PBK,  wordt de prijsverandering gemeten van de voorraad bestaande koopwoningen in Nederland.
+In de grafiek zijn twee belangrijke gebeurtenissen in het verleden weergegeven. Deze gebeurtenissen hebben duidelijk veel invloed gehad op de loop van de huizenmarkt. De prijsindex is 100 in 2015. Dit is dus het basisjaar waar alle waardes aan worden gerefereerd. Verder is er een duidelijke daling te zien na 2022. Dit komt door de invloed van de hypotheekrente die op dat punt weer zijn gestegen. Hierdoor kost lenen meer geld, en zijn mensen hier dus voorzichter mee. ''')
 st.caption('Data bron: CBS')
 st.divider()
 st.subheader("Invloed van locatie op gemiddelde prijs")
@@ -290,7 +290,9 @@ st.subheader('Toekomst perspectief ten opzichte van inflatie')
 st.plotly_chart(fig, use_container_width = True)
 st.write(f'R-squared for Price Index Existing Homes: {r_squared_price_index}')
 st.write(f'R-squared for CPI: {r_squared_cpi}')
-st.write(''' In deze grafiek is er een lineaire regressielijn geplot. Er is zowel een regressielijn voor de CPI als voor de PBK. Omdat de huizenmarkt door een gebeurtenis makkelijk te beïnvloeden is, is het moeilijk om eigenlijk al zo ver in de toekomst te kijken. Daardoor is de kwaliteit van het regressiemodel bepaald door de R-sqaured , ofwel  de determinatie coëfficiënt. . Deze percentages geven aan hoe goed het model in staat is om de toekomst te voorspellen. Voor de CPI is deze veel hoger, dan voor de PBK. Een oorzaak hiervan is dat de woningmarkt door veel gebeurtenis wordt beïnvloed, waardoor er in het verleden al veel schommelingen zichtbaar zijn. Hierdoor is de toekomst daarvoor minder precies te voorspellen. ''')
+st.write(''' In deze grafiek is er een lineaire regressielijn geplot en zijn ook de CPI-waardes toegevoegd. De consumentenprijsindex, ofwel CPI, is een afgeleide van de inflatie. Dit wordt weergeven in een percentage index. Wanneer de CPI-waarde lager is dan de prijsindex betekent het dat er een grotere vraag is naar huizen dan de markt eigenlijk aan zou kunnen. Wanneer deze waardes dus gelijk zijn is er een stabiel vraag en aanbod op de markt.
+ 
+Er is zowel een regressielijn voor de CPI als voor de PBK. Omdat de huizenmarkt door een gebeurtenis makkelijk te beïnvloeden is, is het moeilijk om eigenlijk al zo ver in de toekomst te kijken. Daardoor is de kwaliteit van het regressiemodel bepaald door de R-sqaured , ofwel  de determinatie coëfficiënt. . Deze percentages geven aan hoe goed het model in staat is om de toekomst te voorspellen. Voor de CPI is deze veel hoger, dan voor de PBK. Een oorzaak hiervan is dat de woningmarkt door veel gebeurtenis wordt beïnvloed, waardoor er in het verleden al veel schommelingen zichtbaar zijn. Hierdoor is de toekomst daarvoor minder precies te voorspellen. ''')
 st.caption('Data bron: CBS')
 st.divider()
 st.subheader('Conclusie')
