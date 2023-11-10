@@ -126,7 +126,7 @@ def plot_map(year):
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, cmap='viridis', legend=True)
 
     # Stel de titel van de plot in
-    ax.set_title('Gemiddelde Verkoopprijs in 2015 in Euro's')
+    ax.set_title('Gemiddelde Verkoopprijs in 2015 in Euro')
 
     return fig
 map_fig = plot_map(2015)
