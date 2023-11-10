@@ -113,22 +113,23 @@ merged_data_prov = selected_columns_geo_prov.merge(gemiddelde_verkoop_prov, left
 
 
 #kaart 1: 
+# Creëer een geopandas GeoDataFrame met gegevens van alleen 2015
+gdf = gpd.GeoDataFrame(data_2015, geometry='geometry')
+
 # Functie voor het plotten van de kaart
 def plot_map(year):
     fig, ax = plt.subplots(1, 1, figsize=(15, 10))
 
-    data_to_plot = gdf[gdf['Perioden'] == year]
+    data_to_plot = gdf
 
     # Plot de kaart gebaseerd op 'GemiddeldeVerkoopprijs_1'
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, cmap='viridis', legend=True)
 
-    # Stel de titel van de plot in met het geselecteerde jaar
-    ax.set_title(f'Gemiddelde Verkoopprijs in {year}')
+    # Stel de titel van de plot in
+    ax.set_title('Gemiddelde Verkoopprijs in 2015')
 
     return fig
-default_year = 2015  # Standaard jaar is 2015
-map_fig = plot_map(default_year)
-
+map_fig = plot_map(2015)
 
 #lijnchart 
 # Maak een interactieve lijnplot met Plotly Express
