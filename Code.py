@@ -64,6 +64,7 @@ gemiddelde_verkoop = pd.read_csv('GemVerkoop.csv',sep = ';')
 gemiddelde_verkoop_prov = pd.read_csv('GemVerkoopProv.csv',sep = ';')
 #Index
 index = pd.read_csv('bestaande_koopwoningen.csv', sep=';', quotechar='"')
+inflation = pd.read_csv('cpi.csv', sep=';', quotechar='"')
 
 #Filtering CSV Prov
 # Dictionary met de corresponderende provinciecodes en namen
@@ -89,7 +90,13 @@ gemiddelde_verkoop_prov['Perioden'] = gemiddelde_verkoop_prov['Perioden'].str.sl
 #filtering and cleaning index csv
 kolommen_te_verwijderen = ["ID", "OntwikkelingTOVEenJaarEerder_3", "OntwikkelingTOVVoorgaandePeriode_2", "OntwikkelingTOVVoorgaandePeriode_5", "OntwikkelingTOVEenJaarEerder_6", "TotaleWaardeVerkoopprijzen_8"]
 index = index.drop(columns=kolommen_te_verwijderen)
+# Add a 'Year' column based on 'Perioden'
+index['Year'] = index['Perioden'].str.extract('(\d{4})').astype(float)
 index = index.dropna()
+
+#filtering and cleaning inflation csv
+# Add a 'Year' column based on 'Perioden' for the inflation DataFrame
+inflation['Year'] = inflation['Perioden'].str.extract('(\d{4})').astype(float)
 
 
 #merging data
@@ -129,7 +136,7 @@ def plot_map(year):
     return fig
 map_fig = plot_map(2015)
 
-#lijnchart 
+#lijnchart1 
 # Maak een interactieve lijnplot met Plotly Express
 fig1 = px.line(index, x="Perioden", y="PrijsindexBestaandeKoopwoningen_1",
               labels={"PrijsindexBestaandeKoopwoningen_1": "Prijsindex Bestaande Koopwoningen_1"},
@@ -161,6 +168,10 @@ fig1.add_vline(x=index_128_8, line_dash="dot", line_color="green", annotation_te
 # Pas de labels aan
 fig1.update_xaxes(title_text="Perioden")
 fig1.update_yaxes(title_text="Prijsindex van Bestaande Koopwoningen")
+
+
+#lijnchart2
+
 
 # Streamlit section
 st.title("De woningcrisis o.b.v. data")
