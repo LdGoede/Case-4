@@ -247,7 +247,7 @@ fig.add_trace(go.Scatter(x=future_years_cpi['Year'], y=predictions_cpi,
 st.title("De woningcrisis o.b.v. data")
 st.caption("Door Emma Wartena & Luuk de Goede")
 st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-of-us-paper-currency-royalty-free-image-1631301093.jpg?crop=1.00xw:0.376xh;0,0.126xh&resize=1200:*', caption='Credit: Elle.com')
-
+st.write('''Een koopwoning krijgen is haast onmogelijk, je hoort het vaak genoeg in het nieuws of om je heen. Erg vervelend maar wat zijn nou oorzaken hiervan? En kunnen deze oorzaken uitgelicht worden door de data? En wat zegt de data over de toekomst? In deze post wordt ingezoomd op al deze punten. De data die gebruikt is, is afkomstig van het CBS en is van de periode 1995 tot 2022. ''')
 
 st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
