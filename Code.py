@@ -196,6 +196,48 @@ fig.update_yaxes(title_text="Index")
 # Add a legend
 fig.update_layout(legend=dict(x=0, y=1, traceorder='normal', orientation='h'))
 
+# Train the model for Price Index Existing Homes
+X_price_index = index[['Year']]
+y_price_index = index['PrijsindexBestaandeKoopwoningen_1']
+
+# Instantiate the regression model
+model_price_index = LinearRegression()
+
+# Train the model for Price Index Existing Homes
+model_price_index.fit(X_price_index, y_price_index)
+
+# Predict values for the period until '2050JJ00'
+future_years_price_index = pd.DataFrame({'Year': np.arange(1995, 2051, 1)})  # Adjust to the desired period
+predictions_price_index = model_price_index.predict(future_years_price_index[['Year']])
+
+# Add the predictions to the plot for Price Index Existing Homes
+fig.add_trace(go.Scatter(x=future_years_price_index['Year'], y=predictions_price_index,
+                         mode='lines',
+                         line=dict(color='purple', width=2),
+                         name='Predicted Price Index'))
+
+# Train the model for CPI
+X_cpi = inflation[['Year']]
+y_cpi = inflation['CPI_1']
+
+# Instantiate the regression model
+model_cpi = LinearRegression()
+
+# Train the model for CPI
+model_cpi.fit(X_cpi, y_cpi)
+
+# Predict values for the period until '2050JJ00'
+future_years_cpi = pd.DataFrame({'Year': np.arange(1995, 2051, 1)})  # Adjust to the desired period
+predictions_cpi = model_cpi.predict(future_years_cpi[['Year']])
+
+# Add the predictions to the plot for CPI
+fig.add_trace(go.Scatter(x=future_years_cpi['Year'], y=predictions_cpi,
+                         mode='lines',
+                         line=dict(color='orange', width=2),
+                         name='Predicted CPI'))
+
+
+
 
 
 
