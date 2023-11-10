@@ -190,7 +190,8 @@ def plot_map(year):
     st.pyplot(fig)
 
 # Streamlit app code
-selected_year = st.slider('Selecteer een jaar', min_value=gdfProv['Perioden'].min(), max_value=gdfProv['Perioden'].max())
+selected_year = st.slider('Selecteer een jaar', min_value=int(gdfProv['Perioden'].min()), max_value=int(gdfProv['Perioden'].max()))
+
 
 plot_map(selected_year)
 
