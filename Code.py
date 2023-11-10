@@ -170,6 +170,8 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
 
+
+#kaart 2
 gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
 # Bepaal de minimale en maximale waarden voor de kleurschaal
 min_val = gdfProv['GemiddeldeVerkoopprijs_1'].min()
@@ -180,7 +182,7 @@ def plot_map(year):
 
     # Creëer de plot met 'plasma' colormap
     fig, ax = plt.subplots(figsize=(10, 7))
-    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
+    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs in Euro"}, vmin=min_val, vmax=max_val)
     plt.title(f"Kaart van Nederland in {year}")
     st.pyplot(fig)
 
