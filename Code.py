@@ -8,6 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import geopandas as gpd
 from sklearn.linear_model import LinearRegression
+import numpy as np
 
 #API call 1 GeodataGemeente
 def load_geo_data():
