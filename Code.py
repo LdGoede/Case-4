@@ -113,23 +113,21 @@ merged_data_prov = selected_columns_geo_prov.merge(gemiddelde_verkoop_prov, left
 
 
 #kaart 1: 
-# Creëer een geopandas GeoDataFrame
-gdf = gpd.GeoDataFrame(data_2015, geometry='geometry')
-
-# Plot initialiseren
-fig1, ax = plt.subplots(1, 1, figsize=(15, 10))
-
 # Functie voor het plotten van de kaart
 def plot_map(year):
+    fig, ax = plt.subplots(1, 1, figsize=(15, 10))
+
     data_to_plot = gdf[gdf['Perioden'] == year]
 
     # Plot de kaart gebaseerd op 'GemiddeldeVerkoopprijs_1'
     data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, cmap='viridis', legend=True)
 
     # Stel de titel van de plot in met het geselecteerde jaar
-    ax.set_title(f'Gemiddelde Verkoopprijs in {year}')  
+    ax.set_title(f'Gemiddelde Verkoopprijs in {year}')
 
-
+    return fig
+default_year = 2015  # Standaard jaar is 2015
+map_fig = plot_map(default_year)
 
 
 #lijnchart 
@@ -172,4 +170,4 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 
 
 st.plotly_chart(fig1, use_container_width=True)
-st.map(plot_map(year))
+st.pyplot(map_fig)
