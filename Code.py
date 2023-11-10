@@ -174,20 +174,24 @@ st.pyplot(map_fig, use_container_width=True)
 # Laden van de data in een GeoDataFrame
 gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
 
-min_year = int(gdfProv['Perioden'].min())
-max_year = int(gdfProv['Perioden'].max())
+# Bepaal de minimale en maximale waarden voor de kleurschaal
+min_val = gdfProv['GemiddeldeVerkoopprijs_1'].min()
+max_val = gdfProv['GemiddeldeVerkoopprijs_1'].max()
 
-selected_year = st.slider('Selecteer een jaar', min_value=min_year, max_value=max_year)
+# Functie om de kaart te plotten op basis van het jaar
+def plot_map(year):
+    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
 
-data_to_plot = gdfProv[gdfProv['Perioden'] == selected_year]
+    # Creëer de plot met 'plasma' colormap
+    fig, ax = plt.subplots(figsize=(10, 10))
+    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
+    plt.title(f"Kaart van Nederland in {year}")
 
-min_val = data_to_plot['GemiddeldeVerkoopprijs_1'].min()
-max_val = data_to_plot['GemiddeldeVerkoopprijs_1'].max()
+    st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(10, 10))
-data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
-plt.title(f"Kaart van Nederland in {selected_year}")
+# Streamlit app code
+selected_year = st.slider('Selecteer een jaar', min_value=gdfProv['Perioden'].min(), max_value=gdfProv['Perioden'].max())
 
-st.pyplot(fig)
+plot_map(selected_year)
 
 
