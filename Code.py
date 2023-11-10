@@ -169,3 +169,26 @@ st.image('https://hips.hearstapps.com/hmg-prod/images/model-home-resting-on-top-
 
 st.plotly_chart(fig1, use_container_width=True)
 st.pyplot(map_fig, use_container_width=True)
+# Laden van de data in een GeoDataFrame
+@st.cache
+def load_data():
+    gdfProv = gpd.GeoDataFrame(merged_data_prov, geometry=merged_data_prov['geometry'])
+    return gdfProv
+
+# Functie om de kaart te plotten op basis van het jaar
+@st.cache
+def plot_map(gdfProv, year):
+    data_to_plot = gdfProv[gdfProv['Perioden'] == year]
+
+    # Creëer de plot met 'plasma' colormap
+    fig, ax = plt.subplots(figsize=(10, 10))
+    data_to_plot.plot(column='GemiddeldeVerkoopprijs_1', ax=ax, legend=True, cmap='plasma', legend_kwds={'label': "Gemiddelde verkoopprijs"}, vmin=min_val, vmax=max_val)
+    plt.title(f"Kaart van Nederland in {year}")
+
+# Streamlit app code
+gdfProv = load_data()
+
+selected_year = st.slider('Selecteer een jaar', min_value=gdfProv['Perioden'].min(), max_value=gdfProv['Perioden'].max())
+
+plot_map(gdfProv, selected_year)
+st.pyplot()
