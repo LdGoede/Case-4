@@ -294,6 +294,6 @@ st.write(''' In deze grafiek is er een lineaire regressielijn geplot. Er is zowe
 st.caption('Data bron: CBS')
 st.divider()
 st.subheader('Conclusie')
-st.write('''conclusie''')
+st.write('''Uit de visualisaties kan opgemaakt worden dat de woningcrisis een serieus probleem is. Als de prijzen op blijven lopen als deze doen bij de trendlijn zal snel iets moeten gebeuren. Het uiteenlopende CPI tegenover de groeiende prijzen versterkt dit. Verder kan geconcludeerd worden dat de prijzen in steden nog harder zijn gegroeid, misschien dat spreiding van de bevolking over het land voor de toekomst een goed idee is. ''')
 
 
