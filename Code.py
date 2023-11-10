@@ -115,7 +115,7 @@ gdf = gpd.GeoDataFrame(data_2015, geometry='geometry')
 
 # Functie voor het plotten van de kaart
 def plot_map(year):
-    fig, ax = plt.subplots(1, 1, figsize=(2, 8))
+    fig, ax = plt.subplots(1, 1, figsize=(20, 8))
 
     data_to_plot = gdf
 
